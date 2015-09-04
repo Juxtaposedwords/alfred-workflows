@@ -1,0 +1,3 @@
+[submodule "alfred-viscosity"]
+	path = alfred-viscosity
+	url = https://github.com/deanishe/alfred-viscosity

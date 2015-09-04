@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Internet</string>
+	<key>connections</key>
+	<dict>
+		<key>07D3EDDB-A19B-4301-905D-994C2C291534</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>107D3580-17CF-4B55-AF26-ECDA7452FABA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>FF8E3BE3-2E94-4801-8A01-9AA8DE17340B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>178B4529-D269-4BFD-9710-C29F18514159</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>07D3EDDB-A19B-4301-905D-994C2C291534</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Maloy Wilkes</string>
+	<key>description</key>
+	<string>filter Dropbox folder for GIFs and copying public URL to clipboard. Based of Jonnie Hallman's Pic Filter workflow</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Dropbox Files</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<true/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>Copied to Clipboard</string>
+				<key>title</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>178B4529-D269-4BFD-9710-C29F18514159</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>anchorfields</key>
+				<true/>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<false/>
+				<key>keyword</key>
+				<string>drop</string>
+				<key>scopes</key>
+				<array>
+					<string>~/Dropbox/Public</string>
+				</array>
+				<key>subtext</key>
+				<string>Get a quick link to those public files!</string>
+				<key>title</key>
+				<string>Dropbox</string>
+				<key>types</key>
+				<array/>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.filefilter</string>
+			<key>uid</key>
+			<string>FF8E3BE3-2E94-4801-8A01-9AA8DE17340B</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>login=
+apiKey=
+
+curl -s --data "login=$login&amp;apiKey=$apiKey&amp;longUrl={query}&amp;format=txt" http://api.bitly.com/v3/shorten | pbcopy</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.script</string>
+			<key>uid</key>
+			<string>107D3580-17CF-4B55-AF26-ECDA7452FABA</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>absolute_path={query} 
+relative_path=${absolute_path#*Dropbox/Public/}
+
+dropbox_url="http://dl.dropboxusercontent.com/u/"
+dropbox_id=""
+
+dropbox_url="$dropbox_url$dropbox_id$dropbox_base/$relative_path"
+echo -ne "$dropbox_url"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>07D3EDDB-A19B-4301-905D-994C2C291534</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>07D3EDDB-A19B-4301-905D-994C2C291534</key>
+		<dict>
+			<key>ypos</key>
+			<real>310</real>
+		</dict>
+		<key>107D3580-17CF-4B55-AF26-ECDA7452FABA</key>
+		<dict>
+			<key>ypos</key>
+			<real>310</real>
+		</dict>
+		<key>178B4529-D269-4BFD-9710-C29F18514159</key>
+		<dict>
+			<key>ypos</key>
+			<real>30</real>
+		</dict>
+		<key>FF8E3BE3-2E94-4801-8A01-9AA8DE17340B</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>github.com/juxtaposedwords</string>
+</dict>
+</plist>
